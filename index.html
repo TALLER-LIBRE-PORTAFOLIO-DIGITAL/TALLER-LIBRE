@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portafolio Web | Software de diseño y edición multimedia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16204a; --paper:#f3f5f9; --card:#ffffff; --line:#d9deea;
+  --teal:#00a38c; --sun:#ffc93c; --muted:#56608a;
+  --head:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Figtree",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--ink:#e8ebf8; --paper:#0e1330; --card:#171d44; --line:#2a3269; --muted:#a3abd3}
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.6}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+section{padding:72px 0}
+h1,h2,h3{font-family:var(--head);line-height:1.1}
+h2{font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:12px}
+.lead{color:var(--muted);max-width:60ch;margin-bottom:32px}
+
+/* Navegacion */
+header{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--head);font-weight:800;text-decoration:none}
+.brand svg{width:34px;height:34px}
+.menu{display:flex;gap:24px;list-style:none}
+.menu a{text-decoration:none;font-weight:500;padding:6px 0;border-bottom:2px solid transparent}
+.menu a:hover,.menu a.active{border-color:var(--teal)}
+.burger{display:none;background:none;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:8px 12px;font-size:1rem;cursor:pointer}
+
+/* Inicio */
+.hero{padding:88px 0 72px}
+.hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(2.6rem,7vw,5rem);font-weight:800;letter-spacing:-.02em;margin-bottom:16px}
+.hero p{font-size:1.1rem;color:var(--muted);max-width:52ch;margin-bottom:12px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 28px}
+.tag{border:1.5px solid var(--ink);border-radius:99px;padding:4px 14px;font-size:.9rem;font-weight:600}
+.btn{display:inline-block;background:var(--ink);color:var(--paper);padding:12px 24px;border-radius:10px;font-weight:600;text-decoration:none;border:0;cursor:pointer;font-size:1rem;font-family:inherit}
+.btn:hover{background:var(--teal);color:#fff}
+.logo-big{width:100%;max-width:380px;justify-self:center}
+
+
+/* Equipo */
+.team{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:18px}
+.member{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;text-align:center}
+.avatar{width:84px;height:84px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;font-family:var(--head);font-size:1.6rem;font-weight:800;color:#16204a}
+img.avatar{object-fit:cover;object-position:center top;width:96px;height:96px;display:block}
+.member h3{font-size:1.05rem;margin-bottom:2px}
+.member p{color:var(--muted);font-size:.9rem}
+
+/* Portafolio */
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+.filters button{background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:99px;padding:8px 18px;font:600 .95rem var(--body);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
+.work{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;text-align:left;color:inherit;font:inherit;padding:0}
+.work:hover{border-color:var(--teal)}
+.work .thumb{aspect-ratio:16/10;display:grid;place-items:center;font-family:var(--head);font-weight:800;font-size:1.3rem;color:#16204a}
+.work .info{padding:14px 16px 18px}
+.work h3{font-size:1.1rem;margin-bottom:4px}
+.work p{font-size:.9rem;color:var(--muted)}
+.empty{color:var(--muted);padding:24px 0}
+
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(10,14,40,.75);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.modal.open{display:flex}
+.dialog{background:var(--card);border-radius:16px;max-width:640px;width:100%;max-height:90vh;overflow:auto;padding:24px;position:relative}
+.dialog .thumb{aspect-ratio:16/9;border-radius:10px;display:grid;place-items:center;font-family:var(--head);font-weight:800;font-size:1.6rem;color:#16204a;margin:12px 0}
+.work .thumb{overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.dialog .vista,.dialog video{width:100%;max-height:70vh;object-fit:contain;border-radius:10px;margin:8px 0;display:block;background:#0a0e28}
+.dialog audio,.dialog iframe{width:100%;margin:8px 0;border:0;border-radius:10px}
+.dialog iframe{aspect-ratio:16/9}
+.dialog dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:12px 0;font-size:.95rem}
+.dialog dt{font-weight:600}
+.close{position:absolute;top:12px;right:12px;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;font:600 .9rem var(--body)}
+
+/* CRÉDITOS Y FOOTER */
+.credits{background:var(--ink);color:var(--paper)}
+.credits .lead{color:inherit;opacity:.8}
+.credits dl{display:grid;grid-template-columns:auto 1fr;gap:8px 20px;max-width:520px}
+.credits dt{font-weight:600}
+footer{background:var(--ink);color:var(--paper);border-top:1px solid rgba(255,255,255,.2);padding:20px 0;font-size:.9rem;text-align:center;opacity:.95}
+@media (prefers-color-scheme:dark){.credits,footer{background:#080b22;color:#e8ebf8}}
+
+@media (max-width:760px){
+  .burger{display:block}
+  .menu{display:none;position:absolute;top:64px;left:0;right:0;background:var(--paper);flex-direction:column;gap:0;padding:8px 20px 16px;border-bottom:1px solid var(--line)}
+  .menu.open{display:flex}
+  .menu a{display:block;padding:12px 0}
+  .hero .wrap{grid-template-columns:1fr}
+  .logo-big{max-width:220px;order:-1}
+  section{padding:52px 0}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* ===== PALETA NUEVA ===== */
+:root{
+  --vino:#6E1E2E;
+  --vino-oscuro:#45111C;
+  --negro-carbon:#161214;
+  --marfil:#F6F0E8;
+  --dorado-suave:#C6A15B;
+  --gris-calido:#8C8279;
+
+  --ink:var(--negro-carbon);
+  --paper:var(--marfil);
+  --muted:var(--gris-calido);
+  --card:#FBF8F3;
+  --line:#E2D8CA;
+}
+@media (prefers-color-scheme:dark){
+  :root{--ink:var(--marfil); --paper:var(--negro-carbon); --card:#221A1D; --line:#3A2C31; --muted:#A39A91}
+}
+:focus-visible{outline-color:var(--dorado-suave)}
+h2,.brand,.hero h1{color:var(--vino)}
+.menu a:hover,.menu a.active{border-color:var(--dorado-suave)}
+.tag{border-color:var(--dorado-suave)}
+.btn{background:var(--vino);color:var(--marfil)}
+.btn:hover{background:var(--vino-oscuro);color:#fff}
+.filters button[aria-pressed="true"]{background:var(--vino);border-color:var(--vino);color:var(--marfil)}
+.work:hover{border-color:var(--dorado-suave)}
+.avatar,.work .thumb,.dialog .thumb{color:var(--negro-carbon)}
+.dialog .vista,.dialog video{background:var(--negro-carbon)}
+.modal{background:rgba(22,18,20,.8)}
+.dialog{border-top:4px solid var(--dorado-suave)}
+.credits{background:var(--negro-carbon);color:var(--marfil)}
+.credits h2,.credits dt{color:var(--dorado-suave)}
+footer{background:var(--negro-carbon);color:var(--marfil);border-top:3px solid var(--dorado-suave)}
+@media (prefers-color-scheme:dark){
+  h2,.brand,.hero h1{color:var(--dorado-suave)}
+  .credits,footer{background:var(--vino-oscuro);color:var(--marfil)}
+}
+
+.credits-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.credits-head h2{margin-bottom:0}
+.credits .btn-github{background:var(--dorado-suave);color:var(--negro-carbon);text-decoration:none}
+
+</style>
+</head>
+<body>
+
+<!-- Estructura Base +  Navegacion-->
+<header>
+  <nav class="wrap" aria-label="Principal">
+    <a href="#inicio" class="brand">
+      <img src="img/logo.png" alt="" width="34" height="34">
+      <span id="navNombre">Taller Libre</span>
+    </a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu">Menú</button>
+    <ul class="menu" id="menu">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#equipo">Equipo</a></li>
+      <li><a href="#portafolio">Portafolio</a></li>
+      <li><a href="#creditos">Créditos</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+<!-- inicio -->
+<section id="inicio" class="hero">
+  <div class="wrap">
+    <div>
+      <h1 id="heroNombre">Taller Libre</h1>
+      <p>Portafolio digital de la asignatura <strong>Software de diseño y edición multimedia</strong>, Ingeniería en Desarrollo de Software, Facultad de Tecnología e Innovación, Universidad Dr. Andrés Bello.</p>
+      <p>Reunimos los trabajos de las cuatro unidades del ciclo: imagen, vector, audio y video.</p>
+      <div class="tags"><span class="tag">GIMP</span><span class="tag">Inkscape</span><span class="tag">Audacity</span><span class="tag">OpenShot</span></div>
+      <a class="btn" href="#portafolio">Ver trabajos</a>
+    </div>
+    <!-- Logo -->
+    <img class="logo-big" src="img/logo.png" alt="Logo del equipo">
+  </div>
+</section>
+
+<!-- equipo -->
+<section id="equipo">
+  <div class="wrap">
+    <h2>Quiénes somos</h2>
+    <p class="lead">Ocho integrantes, cada uno con un rol en el diseño, la programación y la curaduría de este portafolio.</p>
+    <div class="team" id="team"></div>
+  </div>
+</section>
+
+<!-- Portafolio Y Filtro -->
+<section id="portafolio" style="background:var(--card)">
+  <div class="wrap">
+    <h2>Portafolio de trabajos</h2>
+    <p class="lead">Filtra por herramienta y abre cualquier trabajo para ver su descripción y el archivo final.</p>
+    <div class="filters" id="filters" role="group" aria-label="Filtrar trabajos"></div>
+    <div class="grid" id="grid"></div>
+    <p class="empty" id="empty" hidden>No hay trabajos en esta categoría todavía.</p>
+  </div>
+</section>
+
+<!-- Credito Y Footer -->
+<section id="creditos" class="credits">
+  <div class="wrap">
+        <div class="credits-head">
+      <h2>Créditos</h2>
+      <a class="btn btn-github" href="[github.com](https://github.com/TALLER-LIBRE-PORTAFOLIO-DIGITAL/TALLER-LIBRE.git)" target="_blank" rel="noopener">Ver en GitHub</a>
+    </div>
+
+    <p class="lead">Proyecto final de cátedra presentado en la Feria de Proyectos Finales de Ciclo.</p>
+    <dl>
+      <dt>Asignatura</dt><dd>Software de diseño y edición multimedia</dd>
+      <dt>Docente</dt><dd>Nombre del docente</dd>
+      <dt>Ciclo académico</dt><dd>Ciclo II 2026</dd>
+      <dt>Presentación</dt><dd>29 de noviembre de 2026</dd>
+      <dt>Contacto</dt><dd>equipo@correo.com</dd>
+    </dl>
+  </div>
+</section>
+</main>
+<footer><div class="wrap">Universidad Dr. Andrés Bello · Facultad de Tecnología e Innovación · 2026</div></footer>
+
+<!-- Modal -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitulo">
+  <div class="dialog">
+    <button class="close" id="mClose">Cerrar</button>
+    <h3 id="mTitulo"></h3>
+    <div class="thumb" id="mThumb"></div>
+    <div id="mMedia"></div>
+    <p id="mDesc"></p>
+    <dl>
+      <dt>Herramienta</dt><dd id="mTool"></dd>
+      <dt>Autor</dt><dd id="mAutor"></dd>
+    </dl>
+    <a class="btn" id="mLink" href="#" target="_blank" rel="noopener">Ver o descargar archivo</a>
+  </div>
+</div>
+
+<!-- 8. INTERACTIVIDAD -->
+<script>
+/* DATOS : edita aquí con la información real del equipo */
+const EQUIPO = "Taller Libre";
+const MIEMBROS = [
+    ["CARLOS RICARDO MARTINEZ SEGOVIA", "Coordinador general", "img/carlos.jpeg"],
+    ["ZOILA ELIZABETH ALEJO OROZCO", "Responsable de contenido por unidad ", "img/zoila.jpeg"],
+    ["JONATHAN ELY SARAVIA VIGIL", "Editor de video ", "img/ely.jpeg"],
+    ["ALI NAHUM HERNANDEZ RIVERA", "Editor de video ", "img/ali nahum.jpeg"],
+    ["JORGE ALEXANDER AGUILLON ROSA", "Programador Front-end", "img/jorge.jpeg"],
+    ["JOSE MOISES ESCALANTE GÓMEZ", "Diseñador Ui/Ux ", "img/jose moises.jpeg"],
+    ["FATIMA ANAHI VASQUEZ VELASQUEZ", "Diseñador Ui/Ux ", "img/fatima.jpeg"],
+    ["CESAR GABRIEL ALVARADO CAMINOS", "Diseñador Ui/Ux ", "img/gabriel_formal.jpeg"],
+    ["MOISÉS IVÁN CLAROS COREAS", " Programador Front-end", "img/moises ivan.jpeg"]
+];
+const COLORES = {GIMP:"#C6A15B",Inkscape:"#D9BF8A",Audacity:"#B98A93",OpenShot:"#E3CFA6",Integrado:"#A8998A"};
+// tipo: imagen | audio | video. Para audio pon la ruta del MP3; para video, la URL embed (YouTube/Drive) o ruta.
+const TRABAJOS = [
+  {t:"El tiempo cura todo",cat:"GIMP",tipo:"imagen",img:"img/tiempo-cura-todo.jpg",autor:"Carlos Martínez",d:"Ilustración con efectos de luz neón y texto, armada por capas. Aprendimos modos de fusión y brillo.",link:"img/tiempo-cura-todo.jpg"},
+  {t:"Doble exposición: Ánima",cat:"GIMP",tipo:"imagen",img:"img/doble-exposicion.jpg",pos:"center 30%",autor:"Jorge Aguillón",d:"Retrato fusionado con un bosque mediante máscaras de capa. Aprendimos a combinar dos fotografías.",link:"img/doble-exposicion.jpg"},
+  {t:"Mirada cósmica",cat:"GIMP",tipo:"imagen",img:"img/mirada-cosmica.jpg",autor:"Jorge Aguillón",d:"Fotomontaje de un ojo con una galaxia en la pupila. Aprendimos selecciones y composición.",link:"img/mirada-cosmica.jpg"},
+  {t:"Dibujo vectorial",cat:"Inkscape",tipo:"imagen",img:"img/dibujo.svg",pos:"center top",autor:"Ely Saravia",d:"Ilustración vectorial hecha con formas y trazados. Aprendimos a trabajar con nodos y colores.",link:"img/dibujo.svg"},
+  {t:"Diseño vectorial",cat:"Inkscape",tipo:"imagen",img:"img/inkscape-jorge.svg",pos:"center top",autor:"Jorge Aguillón",d:"Diseño vectorial en Inkscape. Aprendimos a construir gráficos que no pierden calidad al escalar.",link:"img/inkscape-jorge.svg"},
+  {t:"Cuña radial: Ofertas académicas",cat:"Audacity",tipo:"audio",src:"audio/cuna-radial-ofertas-academicas.mp3",dur:"5:00",autor:"Carlos Martínez, Zoila Alejo, Ely Saravia, Ali Hernández y Jorge Aguillón",d:"Cuña radial con voz y música de fondo. Aprendimos a mezclar pistas y ajustar volumen.",link:"audio/cuna-radial-ofertas-academicas.mp3"},
+  {t:"El Carnaval de San Miguel: reportaje",cat:"Audacity",tipo:"audio",src:"audio/carnaval-san-miguel-reportaje.mp3",dur:"5:47",autor:"Moisés Escalante y Ely Saravia",d:"Reportaje de audio sobre el carnaval. Aprendimos a cortar, ordenar y limpiar grabaciones.",link:"audio/carnaval-san-miguel-reportaje.mp3"},
+  {t:"Video navideño (versión final)",cat:"OpenShot",tipo:"video",src:"video/video-navideno-5min-final.mp4",img:"img/poster-video-navideno-final.jpg",dur:"5:00",autor:"Ali Hernández",d:"Versión final de 5 minutos con ajustes de edición y exportación para web.",link:"video/video-navideno-5min-final.mp4"}
+];
+
+/* Navegacion*/
+document.getElementById("navNombre").textContent = EQUIPO;
+document.getElementById("heroNombre").textContent = EQUIPO;
+const burger = document.getElementById("burger"), menu = document.getElementById("menu");
+burger.onclick = () => { const o = menu.classList.toggle("open"); burger.setAttribute("aria-expanded", o); };
+menu.querySelectorAll("a").forEach(a => a.onclick = () => { menu.classList.remove("open"); burger.setAttribute("aria-expanded", false); });
+
+// resalta el enlace de la sección visible
+const links = [...menu.querySelectorAll("a")];
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) links.forEach(l => l.classList.toggle("active", l.getAttribute("href") === "#" + e.target.id));
+}), {rootMargin:"-45% 0px -50% 0px"});
+document.querySelectorAll("main section").forEach(s => obs.observe(s));
+
+/* Equipo */
+const tonos = Object.values(COLORES);
+document.getElementById("team").innerHTML = MIEMBROS.map(([n, r, foto], i) => {
+  const ini = n.split(" ").slice(0, 2).map(p => p[0]).join("");
+  const av = foto
+    ? `<img class="avatar" src="${foto}" alt="Foto de ${n}" loading="lazy">`
+    : `<div class="avatar" style="background:${tonos[i % tonos.length]}">${ini}</div>`;
+  return `<article class="member">${av}<h3>${n}</h3><p>${r}</p></article>`;
+}).join("");
+// Fotos: agrega la ruta como tercer valor de cada integrante, ej. ["Ana López","Rol","fotos/ana.jpg"]
+
+/* Portafolio Y Filtro*/
+const cats = ["Todos", "GIMP", "Inkscape", "Audacity", "OpenShot", "Integrado"];
+const filters = document.getElementById("filters"), grid = document.getElementById("grid"), empty = document.getElementById("empty");
+filters.innerHTML = cats.map((c, i) => `<button data-c="${c}" aria-pressed="${i === 0}">${c}</button>`).join("");
+function pintar(cat) {
+  const lista = TRABAJOS.map((w, i) => ({...w, i})).filter(w => cat === "Todos" || w.cat === cat);
+  grid.innerHTML = lista.map(w => `<button class="work" data-i="${w.i}">
+    <div class="thumb" style="background:${COLORES[w.cat]}">${w.img ? `<img src="${w.img}" alt="Vista previa de ${w.t}" loading="lazy" style="object-position:${w.pos || "center"}">` : w.cat}</div>
+    <div class="info"><h3>${w.t}</h3><p>${w.d.slice(0, 70)}${w.d.length > 70 ? "…" : ""}</p></div></button>`).join("");
+  empty.hidden = lista.length > 0;
+}
+filters.onclick = e => {
+  const b = e.target.closest("button"); if (!b) return;
+  filters.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  pintar(b.dataset.c);
+};
+pintar("Todos");
+
+/* Modal*/
+const modal = document.getElementById("modal");
+let ultimo = null;
+grid.onclick = e => {
+  const c = e.target.closest(".work"); if (!c) return;
+  const w = TRABAJOS[c.dataset.i]; ultimo = c;
+  mTitulo.textContent = w.t; mDesc.textContent = w.d; mTool.textContent = w.cat; mAutor.textContent = w.autor;
+  mThumb.hidden = true;
+  mLink.href = w.link || "#";
+  let media = "";
+  if (w.tipo === "imagen") media = `<img class="vista" src="${w.img}" alt="${w.t}">`;
+  if (w.tipo === "audio") { mThumb.hidden = false; mThumb.textContent = w.cat; mThumb.style.background = COLORES[w.cat];
+    media = `<p><strong>Duración:</strong> ${w.dur || "—"}</p><audio controls preload="none" src="${w.src}"></audio>`; }
+  if (w.tipo === "video") media = `<video controls preload="none" poster="${w.img || ""}" src="${w.src}"></video>`;
+  mMedia.innerHTML = media;
+  modal.classList.add("open"); document.body.style.overflow = "hidden"; mClose.focus();
+};
+function cerrar() {
+  modal.classList.remove("open"); document.body.style.overflow = ""; mMedia.innerHTML = ""; // detiene audio/video
+  if (ultimo) ultimo.focus();
+}
+mClose.onclick = cerrar;
+modal.onclick = e => { if (e.target === modal) cerrar(); };
+document.addEventListener("keydown", e => { if (e.key === "Escape" && modal.classList.contains("open")) cerrar(); });
+</script>
+</body>
+</html>
