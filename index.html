@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portafolio Web | Software de diseño y edición multimedia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+
+<!-- Estructura Base +  Navegacion-->
+<header>
+  <nav class="wrap" aria-label="Principal">
+    <a href="#inicio" class="brand">
+      <img src="img/logo.png" alt="" width="34" height="34">
+      <span id="navNombre">Taller Libre</span>
+    </a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu">Menú</button>
+    <ul class="menu" id="menu">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#equipo">Equipo</a></li>
+      <li><a href="#portafolio">Portafolio</a></li>
+      <li><a href="#creditos">Créditos</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+<!-- inicio -->
+<section id="inicio" class="hero">
+  <div class="wrap">
+    <div>
+      <h1 id="heroNombre">Taller Libre</h1>
+      <p>Portafolio digital de la asignatura <strong>Software de diseño y edición multimedia</strong>, Ingeniería en Desarrollo de Software, Facultad de Tecnología e Innovación, Universidad Dr. Andrés Bello.</p>
+      <p>Reunimos los trabajos de las cuatro unidades del ciclo: imagen, vector, audio y video.</p>
+      <div class="tags"><span class="tag">GIMP</span><span class="tag">Inkscape</span><span class="tag">Audacity</span><span class="tag">OpenShot</span></div>
+      <a class="btn" href="#portafolio">Ver trabajos</a>
+    </div>
+    <!-- Logo -->
+    <img class="logo-big" src="img/logo.png" alt="Logo del equipo">
+  </div>
+</section>
+
+<!-- equipo -->
+<section id="equipo">
+  <div class="wrap">
+    <h2>Quiénes somos</h2>
+    <p class="lead">Nueve integrantes, cada uno con un rol en el diseño, la programación y la curaduría de este portafolio.</p>
+    <div class="team" id="team"></div>
+  </div>
+</section>
+
+<!-- Portafolio Y Filtro -->
+<section id="portafolio" style="background:var(--card)">
+  <div class="wrap">
+    <h2>Portafolio de trabajos</h2>
+    <p class="lead">Filtra por herramienta y abre cualquier trabajo para ver su descripción y el archivo final.</p>
+    <div class="filters" id="filters" role="group" aria-label="Filtrar trabajos"></div>
+    <div class="grid" id="grid"></div>
+    <p class="empty" id="empty" hidden>No hay trabajos en esta categoría todavía.</p>
+  </div>
+</section>
+
+<!-- Credito Y Footer -->
+<section id="creditos" class="credits">
+  <div class="wrap">
+        <div class="credits-head">
+      <h2>Créditos</h2>
+      <a class="btn btn-github" href="https://github.com/TALLER-LIBRE-PORTAFOLIO-DIGITAL/TALLER-LIBRE.git" target="_blank" rel="noopener">Ver en GitHub</a>
+    </div>
+
+    <p class="lead">Proyecto final de cátedra presentado en la Feria de Proyectos Finales de Ciclo.</p>
+    <dl>
+      <dt>Asignatura</dt><dd>Software de diseño y edición multimedia</dd>
+      <dt>Docente</dt><dd>Ing. Franklin Geovany Buruca Hernández</dd>
+      <dt>Ciclo académico</dt><dd>Ciclo II 2026</dd>
+      <dt>Presentación</dt><dd>5 de Diciembre de 2026</dd>
+      <!-- <dt>Contacto</dt><dd>equipo@correo.com</dd> -->
+    </dl>
+  </div>
+</section>
+</main>
+<footer><div class="wrap">Universidad Dr. Andrés Bello · Facultad de Tecnología e Innovación · 2026</div></footer>
+
+<!-- Modal -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitulo">
+  <div class="dialog">
+    <button class="close" id="mClose">Cerrar</button>
+    <h3 id="mTitulo"></h3>
+    <div class="thumb" id="mThumb"></div>
+    <div id="mMedia"></div>
+    <p id="mDesc"></p>
+    <dl>
+      <dt>Herramienta</dt><dd id="mTool"></dd>
+      <dt>Autor</dt><dd id="mAutor"></dd>
+    </dl>
+    <a class="btn" id="mLink" href="#" target="_blank" rel="noopener">Ver o descargar archivo</a>
+  </div>
+</div>
+
+<!-- 8. INTERACTIVIDAD -->
+<script src="script.js"></script>
+</body>
+</html>
